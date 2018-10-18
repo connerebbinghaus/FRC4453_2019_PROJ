@@ -10,7 +10,7 @@ package org.usfirst.frc.team4453.robot;
 import java.util.HashMap;
 
 import org.usfirst.frc.team4453.robot.commands.autonomous.*;
-import org.usfirst.frc.team4453.robot.library.Vision;
+//import org.usfirst.frc.team4453.robot.library.Vision;
 import org.usfirst.frc.team4453.robot.subsystems.*;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
 
     public static OI oi;
 
-    public Vision vision;
+    //public Vision vision;
 
     public enum RobotPosition {
 	LEFT,
@@ -80,8 +80,8 @@ public class Robot extends TimedRobot {
 	ahrs.setSubsystem("Chassis");
 	System.out.println("AHRS Started!");
 	
-	vision = new Vision();
-	System.out.println("Vision Started!");
+	//vision = new Vision();
+	//System.out.println("Vision Started!");
 	
 	chassis = new Chassis();
 	System.out.println("Chassis constructed!");
@@ -210,8 +210,8 @@ public class Robot extends TimedRobot {
     }
 
     public void telemetry() {
-	SmartDashboard.putNumber("Vision distance", vision.getDistance());
-	SmartDashboard.putNumber("Vision angle", vision.getAngle());
+	//SmartDashboard.putNumber("Vision distance", vision.getDistance());
+	//SmartDashboard.putNumber("Vision angle", vision.getAngle());
 	SmartDashboard.putNumber("Left Distance", chassis.getLeftDistance());
 	SmartDashboard.putNumber("Right Distance", chassis.getRightDistance());
 	SmartDashboard.putNumber("Hi Pressure", chassis.getHiPressure());
