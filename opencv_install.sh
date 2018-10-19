@@ -4,7 +4,7 @@ set -eux -o pipefail
 OPENCV_VERSION=${OPENCV_VERSION:-3.4.1}
 OPENCV_SRC=$(pwd)/opencv
 OPENCV_BUILD=$(pwd)/opencv/build
-OPENCV_CONTRIB_ROOT=$(pwd)/opencv_contrib/modules
+OPENCV_CONTRIB_ROOT=$(pwd)/opencv_contrib
 OPENCV_CONTRIB=$(pwd)/opencv_contrib/modules
 INSTALL_FLAG=$HOME/usr/installed-version/$OPENCV_VERSION
 INSTALL_PREFIX=$HOME/usr
