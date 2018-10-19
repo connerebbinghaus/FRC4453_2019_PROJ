@@ -44,101 +44,101 @@ public class OI {
     private JoystickButton climberControl = new JoystickButton(operator, RobotMap.BACK);
     
     private Trigger hookRaise = new Trigger() {
-				  @Override
-				  public boolean get() {
-				      return Math.abs(operator.getTriggerAxis(Hand.kLeft)) > 0.1;
-				  }
-			      };
-	
+                    @Override
+                    public boolean get() {
+                        return Math.abs(operator.getTriggerAxis(Hand.kLeft)) > 0.1;
+                    }
+                    };
+
    private Trigger hookLower = new Trigger() {
-				  @Override
-				  public boolean get() {
-				      return Math.abs(operator.getTriggerAxis(Hand.kRight)) > 0.1;
-				  }
-			      };
+                    @Override
+                    public boolean get() {
+                        return Math.abs(operator.getTriggerAxis(Hand.kRight)) > 0.1;
+                    }
+                    };
 
     public OI() {
-	shiftHigh.whenPressed(new ChassisShiftHigh());
-	shiftLow.whenPressed(new ChassisShiftLow());
+        shiftHigh.whenPressed(new ChassisShiftHigh());
+        shiftLow.whenPressed(new ChassisShiftLow());
 
-	grabberGrab.whileHeld(new GrabberGrab());
-	grabberGrab.whenReleased(new GrabberHold());
-	grabberRelease.whileHeld(new GrabberRelease());
-	grabberThrow.whileHeld(new GrabberThrow());
-	grabberThrow.whenReleased(new GrabberHold());
-	grabberPull.whileHeld(new GrabberPull());
-	grabberPull.whenReleased(new GrabberHold());
-	
-	wingsLift.whenPressed(new WingsLift());
-	wingsDrop.whenPressed(new WingsDrop());
+        grabberGrab.whileHeld(new GrabberGrab());
+        grabberGrab.whenReleased(new GrabberHold());
+        grabberRelease.whileHeld(new GrabberRelease());
+        grabberThrow.whileHeld(new GrabberThrow());
+        grabberThrow.whenReleased(new GrabberHold());
+        grabberPull.whileHeld(new GrabberPull());
+        grabberPull.whenReleased(new GrabberHold());
+        
+        wingsLift.whenPressed(new WingsLift());
+        wingsDrop.whenPressed(new WingsDrop());
 
-	//hookRaise.whileActive(new HookTeleop());
-	hookRaise.whileActive(new HookRaise());
-	//hookLower.whenInactive(new HookLower());
-	hookLower.whileActive(new HookLowerFast());
-	//shooterShoot.whenPressed(new ShooterFire());
-	
-	climberClimb.whileHeld(new ClimberClimb());
-	
-	climberControl.whileActive(new ClimberControl());;
-	
+        //hookRaise.whileActive(new HookTeleop());
+        hookRaise.whileActive(new HookRaise());
+        //hookLower.whenInactive(new HookLower());
+        hookLower.whileActive(new HookLowerFast());
+        //shooterShoot.whenPressed(new ShooterFire());
+        
+        climberClimb.whileHeld(new ClimberClimb());
+        
+        climberControl.whileActive(new ClimberControl());;
+        
     }
 
     public double getSpdAxis() {
-	return -drive.getY();
+        return -drive.getY();
     }
 
     public double getTurnAxis() {
-	return -drive.getX();
+        return -drive.getX();
     }
 
     public double getTiltAxis() {
-	return operator.getY(Hand.kRight);
+        return operator.getY(Hand.kRight);
     }
 
     public double getGrabDiffAxis() {
-	return operator.getX(Hand.kLeft);
+        return operator.getX(Hand.kLeft);
     }
 
     public double getGrabSpeedAxis() {
-	return operator.getY(Hand.kLeft);
+        return operator.getY(Hand.kLeft);
     }
     
     public double getClimbControl()
     {
-	return operator.getX(Hand.kRight);
+        return operator.getX(Hand.kRight);
     }
 
     public boolean isQuickTurn() {
-	return quickTurn1.get() || quickTurn2.get();
+        return quickTurn1.get() || quickTurn2.get();
     }
 
     public boolean isWingsLift() {
-	return operator.getBumper(Hand.kLeft);
+        return operator.getBumper(Hand.kLeft);
     }
 
     public boolean isWingsDrop() {
-	return operator.getBumper(Hand.kRight);
+        return operator.getBumper(Hand.kRight);
     }
 
     public double getHookSpeed() {
-	return operator.getTriggerAxis(Hand.kLeft) - operator.getTriggerAxis(Hand.kRight);
+        return operator.getTriggerAxis(Hand.kLeft) - operator.getTriggerAxis(Hand.kRight);
     }
     
     public int getDPad() {
-	int p = operator.getPOV();
-	if(p < 0)
-	{
-	    p+=360;
-	}
-	return p;
+        int p = operator.getPOV();
+        if(p < 0)
+        {
+            p+=360;
+        }
+        return p;
     }
     
     public boolean climbControlLeft() {
-	return drive.getRawButton(8);
+        return drive.getRawButton(8);
     }
     
     public boolean climbControlRight() {
-	return drive.getRawButton(9);
+        return drive.getRawButton(9);
     }
 };

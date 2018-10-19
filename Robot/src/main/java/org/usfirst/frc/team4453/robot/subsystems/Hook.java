@@ -18,8 +18,8 @@ public class Hook extends Subsystem {
 
     // PID Constants
     //private final int	 slotIdx     = 0;
-    private final int	 pidLoopIdx  = 0;
-    private final int	 timeOutMs   = 10;
+    private final int pidLoopIdx  = 0;
+    private final int timeOutMs   = 10;
    // private final boolean sensorPhase = true;
     private final boolean motorInvert = true;
     //private final double	 kF	     = 0.0;
@@ -43,57 +43,57 @@ public class Hook extends Subsystem {
 
     private class InitCommand extends Command {
 
-	public InitCommand()
-	{
-	    requires(Hook.this);
-	    setInterruptible(false);
-	}
-	
-	protected void initialize() {
-	    //hookLift.set(ControlMode.PercentOutput, -.3);
-	}
-	
-	@Override
-	protected boolean isFinished() {
-	    //return hookLift.getSensorCollection().isRevLimitSwitchClosed();
-	    return true;
-	}
-	
-	protected void end() {
-	    //hookLift.neutralOutput();
-	    //hookLift.setSelectedSensorPosition(pidLoopIdx, 0, timeOutMs);
-	}
-	
+        public InitCommand()
+        {
+            requires(Hook.this);
+            setInterruptible(false);
+        }
+        
+        protected void initialize() {
+            //hookLift.set(ControlMode.PercentOutput, -.3);
+        }
+        
+        @Override
+        protected boolean isFinished() {
+            //return hookLift.getSensorCollection().isRevLimitSwitchClosed();
+            return true;
+        }
+        
+        protected void end() {
+            //hookLift.neutralOutput();
+            //hookLift.setSelectedSensorPosition(pidLoopIdx, 0, timeOutMs);
+        }
+        
     }
     
     public Hook() {
-	// choose the sensor
-	//hookLift.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, pidLoopIdx, timeOutMs);
-	//hookLift.setSensorPhase(sensorPhase);
-	hookLift.setInverted(motorInvert);
+        // choose the sensor
+        //hookLift.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, pidLoopIdx, timeOutMs);
+        //hookLift.setSensorPhase(sensorPhase);
+        hookLift.setInverted(motorInvert);
 
-	// set the peak, nominal outputs
-	hookLift.configNominalOutputForward(0, timeOutMs);
-	hookLift.configNominalOutputReverse(0, timeOutMs);
-	hookLift.configPeakOutputForward(.5, timeOutMs);
-	hookLift.configPeakOutputReverse(-.5, timeOutMs);
-	
-	//hookLift.configClosedloopRamp(0, timeOutMs);
+        // set the peak, nominal outputs
+        hookLift.configNominalOutputForward(0, timeOutMs);
+        hookLift.configNominalOutputReverse(0, timeOutMs);
+        hookLift.configPeakOutputForward(.5, timeOutMs);
+        hookLift.configPeakOutputReverse(-.5, timeOutMs);
+        
+        //hookLift.configClosedloopRamp(0, timeOutMs);
 
-	// set allowable close-loop error
-	//hookLift.configAllowableClosedloopError(pidLoopIdx, 0, timeOutMs);
-	
-	//hookLift.configForwardSoftLimitThreshold((int) (MAX_HEIGHT * COUNTS_PER_INCH), timeOutMs);
-	//hookLift.configReverseSoftLimitThreshold(0, timeOutMs);
-	//hookLift.configForwardSoftLimitEnable(true, timeOutMs);
-	//hookLift.configReverseSoftLimitEnable(true, timeOutMs);
-	
-	
-	// set closed loop gains in slot0
-	//hookLift.config_kF(pidLoopIdx, kF, timeOutMs);
-	//hookLift.config_kP(pidLoopIdx, kP, timeOutMs);
-	//hookLift.config_kI(pidLoopIdx, kI, timeOutMs);
-	//hookLift.config_kD(pidLoopIdx, kD, timeOutMs);
+        // set allowable close-loop error
+        //hookLift.configAllowableClosedloopError(pidLoopIdx, 0, timeOutMs);
+        
+        //hookLift.configForwardSoftLimitThreshold((int) (MAX_HEIGHT * COUNTS_PER_INCH), timeOutMs);
+        //hookLift.configReverseSoftLimitThreshold(0, timeOutMs);
+        //hookLift.configForwardSoftLimitEnable(true, timeOutMs);
+        //hookLift.configReverseSoftLimitEnable(true, timeOutMs);
+        
+        
+        // set closed loop gains in slot0
+        //hookLift.config_kF(pidLoopIdx, kF, timeOutMs);
+        //hookLift.config_kP(pidLoopIdx, kP, timeOutMs);
+        //hookLift.config_kI(pidLoopIdx, kI, timeOutMs);
+        //hookLift.config_kD(pidLoopIdx, kD, timeOutMs);
     }
 
     //public double getDistance() {
@@ -102,11 +102,11 @@ public class Hook extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-	setDefaultCommand(new HookLower());
+        setDefaultCommand(new HookLower());
     }
     
     public void init() {
-	new InitCommand().start();
+        new InitCommand().start();
     }
 
     //public void set(double setPoint) {
@@ -114,19 +114,19 @@ public class Hook extends Subsystem {
    // }
     
     public void raise() {
-	hookLift.set(ControlMode.PercentOutput, .1); //TODO
+        hookLift.set(ControlMode.PercentOutput, .1); //TODO
     }
     
     public void lower() {
-	hookLift.set(ControlMode.PercentOutput, -.1); //TODO
+        hookLift.set(ControlMode.PercentOutput, -.1); //TODO
     }
     
     public void lowerFast() {
-	hookLift.set(ControlMode.PercentOutput, -.3); //TODO
+        hookLift.set(ControlMode.PercentOutput, -.3); //TODO
     }
 
     public void stop() {
-	hookLift.neutralOutput();
+        hookLift.neutralOutput();
     }
 
     //public void resetEncoder() {
@@ -134,6 +134,6 @@ public class Hook extends Subsystem {
    // }
     
     public boolean isLimitHit() {
-	return hookLift.getSensorCollection().isRevLimitSwitchClosed();
+        return hookLift.getSensorCollection().isRevLimitSwitchClosed();
     }
 }

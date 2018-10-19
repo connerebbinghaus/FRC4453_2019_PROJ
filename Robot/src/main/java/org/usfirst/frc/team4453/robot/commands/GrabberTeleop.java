@@ -16,7 +16,7 @@ public class GrabberTeleop extends Command {
     private double rMotor = 0;
 
     public GrabberTeleop() {
-	requires(Robot.grabber);
+        requires(Robot.grabber);
     }
 
     // Called just before this Command runs the first time
@@ -27,23 +27,23 @@ public class GrabberTeleop extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-	if(Math.abs(Robot.oi.getTiltAxis()) > 0.1)
-	{
-	    angle = Robot.grabber.getTilt() + Robot.oi.getTiltAxis() * 6;
-	    Robot.grabber.tilt(angle);
-	}
-	speed = Robot.oi.getGrabSpeedAxis();
-	diff = Robot.oi.getGrabDiffAxis();
-	lMotor = speed * -diff;
-	rMotor = speed * diff;
+        if(Math.abs(Robot.oi.getTiltAxis()) > 0.1)
+        {
+            angle = Robot.grabber.getTilt() + Robot.oi.getTiltAxis() * 6;
+            Robot.grabber.tilt(angle);
+        }
+        speed = Robot.oi.getGrabSpeedAxis();
+        diff = Robot.oi.getGrabDiffAxis();
+        lMotor = speed * -diff;
+        rMotor = speed * diff;
 
-	Robot.grabber.diff(lMotor, rMotor);
+        Robot.grabber.diff(lMotor, rMotor);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-	return false;
+        return false;
     }
 
     // Called once after isFinished returns true

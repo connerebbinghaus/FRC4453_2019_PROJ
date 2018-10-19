@@ -10,14 +10,14 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class GrabberHold extends InstantCommand {
 
     public GrabberHold() {
-	super();
-	requires(Robot.grabber);
+        super();
+        requires(Robot.grabber);
     }
 
     // Called once when the command executes
     @Override
     protected void initialize() {
-	Robot.grabber.hold();
+        Robot.grabber.hold();
     }
 
 }

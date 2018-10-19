@@ -21,7 +21,7 @@ public class GrabberTilt extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	Robot.grabber.tilt(angle);
+        Robot.grabber.tilt(angle);
     }
 
     // Make this return true when this Command no longer needs to run execute()

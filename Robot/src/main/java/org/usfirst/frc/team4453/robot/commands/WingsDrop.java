@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class WingsDrop extends InstantCommand {
 
     public WingsDrop() {
-	super();
-	requires(Robot.wings);
+        super();
+        requires(Robot.wings);
     }
 
     // Called once when the command executes
@@ -20,9 +20,8 @@ public class WingsDrop extends InstantCommand {
     // }
     @Override
     protected void execute() {
-	if (Timer.getMatchTime() < 30) {
-	    Robot.wings.drop();
-	}
-
+        if (Timer.getMatchTime() < 30) {
+            Robot.wings.drop();
+        }
     }
 }

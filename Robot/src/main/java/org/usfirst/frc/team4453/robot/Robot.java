@@ -74,60 +74,60 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-	System.out.println("Robot Starting...");
-	ahrs = new AHRS(SPI.Port.kMXP);
-	ahrs.getBoardYawAxis();
-	ahrs.setSubsystem("Chassis");
-	System.out.println("AHRS Started!");
-	
-	//vision = new Vision();
-	//System.out.println("Vision Started!");
-	
-	chassis = new Chassis();
-	System.out.println("Chassis constructed!");
-	climber = new Climber();
-	System.out.println("Climber constructed!");
-	grabber = new Grabber();
-	System.out.println("Grabber constructed!");
-	wings = new Wings();
-	System.out.println("Wings constructed!");
-	hook = new Hook();
-	System.out.println("Hook constructed!");
-	shooter = new Shooter();
+        System.out.println("Robot Starting...");
+        ahrs = new AHRS(SPI.Port.kMXP);
+        ahrs.getBoardYawAxis();
+        ahrs.setSubsystem("Chassis");
+        System.out.println("AHRS Started!");
+        
+        //vision = new Vision();
+        //System.out.println("Vision Started!");
+        
+        chassis = new Chassis();
+        System.out.println("Chassis constructed!");
+        climber = new Climber();
+        System.out.println("Climber constructed!");
+        grabber = new Grabber();
+        System.out.println("Grabber constructed!");
+        wings = new Wings();
+        System.out.println("Wings constructed!");
+        hook = new Hook();
+        System.out.println("Hook constructed!");
+        shooter = new Shooter();
 
-	oi = new OI();
-	System.out.println("OI constructed!");
+        oi = new OI();
+        System.out.println("OI constructed!");
 
-	ahrs.zeroYaw();
-	System.out.println("Yaw reset!");
-	System.out.println("Robot started!");
+        ahrs.zeroYaw();
+        System.out.println("Yaw reset!");
+        System.out.println("Robot started!");
 
-	
-	autoChooser.addDefault("No-Op", makeAutoChooserEntry(new NoOp(), new NoOp(), new NoOp()));
-	autoChooser.addObject("Cross Auto Line", makeAutoChooserEntry(new CrossAutoLine(), new CrossAutoLine(), new CrossAutoLine()));
-	autoChooser.addObject("Place Cube (Simple)", makeAutoChooserEntry(new ApproachAndPlaceCube(RobotPosition.LEFT), new ApproachAndPlaceCube(RobotPosition.CENTER), new ApproachAndPlaceCube(RobotPosition.RIGHT)));
-	autoChooser.addObject("Any-positions Auto", makeAutoChooserEntry(new AutoAnyPosition(RobotPosition.LEFT), new AutoAnyPosition(RobotPosition.CENTER), new AutoAnyPosition(RobotPosition.RIGHT)));
-	autoChooser.addObject("Test", makeAutoChooserEntry(new AutoTest(), new AutoTest(), new AutoTest()));
-	autoChooser.addObject("Coord", makeAutoChooserEntry(new AutoCoord(), new AutoCoord(), new AutoCoord()));
-	autoChooser.addObject("Place Cube (Complex)", makeAutoChooserEntry(new ApproachAndPlaceCube2(RobotPosition.LEFT), new ApproachAndPlaceCube2(RobotPosition.CENTER), new ApproachAndPlaceCube2(RobotPosition.RIGHT)));
-	autoChooser.setName("Auto Command");
-	SmartDashboard.putData(autoChooser);
-	
-	positionChooser.addObject("Right", RobotPosition.RIGHT);
-	positionChooser.addDefault("Center", RobotPosition.CENTER);
-	positionChooser.addObject("Left", RobotPosition.LEFT);
-	positionChooser.setName("Robot Starting Position");
-	SmartDashboard.putData(positionChooser);
-	
+        
+        autoChooser.addDefault("No-Op", makeAutoChooserEntry(new NoOp(), new NoOp(), new NoOp()));
+        autoChooser.addObject("Cross Auto Line", makeAutoChooserEntry(new CrossAutoLine(), new CrossAutoLine(), new CrossAutoLine()));
+        autoChooser.addObject("Place Cube (Simple)", makeAutoChooserEntry(new ApproachAndPlaceCube(RobotPosition.LEFT), new ApproachAndPlaceCube(RobotPosition.CENTER), new ApproachAndPlaceCube(RobotPosition.RIGHT)));
+        autoChooser.addObject("Any-positions Auto", makeAutoChooserEntry(new AutoAnyPosition(RobotPosition.LEFT), new AutoAnyPosition(RobotPosition.CENTER), new AutoAnyPosition(RobotPosition.RIGHT)));
+        autoChooser.addObject("Test", makeAutoChooserEntry(new AutoTest(), new AutoTest(), new AutoTest()));
+        autoChooser.addObject("Coord", makeAutoChooserEntry(new AutoCoord(), new AutoCoord(), new AutoCoord()));
+        autoChooser.addObject("Place Cube (Complex)", makeAutoChooserEntry(new ApproachAndPlaceCube2(RobotPosition.LEFT), new ApproachAndPlaceCube2(RobotPosition.CENTER), new ApproachAndPlaceCube2(RobotPosition.RIGHT)));
+        autoChooser.setName("Auto Command");
+        SmartDashboard.putData(autoChooser);
+        
+        positionChooser.addObject("Right", RobotPosition.RIGHT);
+        positionChooser.addDefault("Center", RobotPosition.CENTER);
+        positionChooser.addObject("Left", RobotPosition.LEFT);
+        positionChooser.setName("Robot Starting Position");
+        SmartDashboard.putData(positionChooser);
+        
     }
 
     @Override
     public void teleopInit() {
-	if (autoCommand != null) {
-	    autoCommand.cancel();
-	}
-	grabber.init();
-	//hook.init();
+        if (autoCommand != null) {
+            autoCommand.cancel();
+        }
+        grabber.init();
+        //hook.init();
     }
 
     /**
@@ -135,8 +135,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-	Scheduler.getInstance().run();
-	telemetry();
+        Scheduler.getInstance().run();
+        telemetry();
     }
 
     /**
@@ -153,27 +153,27 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-	ahrs.zeroYaw();
-	//grabber.init();
-	//hook.init();
-	autoCommand = autoChooser.getSelected().get(getRobotStartingPosition());
+        ahrs.zeroYaw();
+        //grabber.init();
+        //hook.init();
+        autoCommand = autoChooser.getSelected().get(getRobotStartingPosition());
 
-	// String autoSelected = SmartDashboard.getString("Auto Selector",
-	// "Default");
-	// switch (autoSelected) {
-	// case "My Auto":
-	// autonomousCommand = new MyAutoCommand();
-	// break;
-	// case "Default Auto":
-	// default:
-	// autonomousCommand = new ExampleCommand();
-	// break;
-	// }
+        // String autoSelected = SmartDashboard.getString("Auto Selector",
+        // "Default");
+        // switch (autoSelected) {
+        // case "My Auto":
+        // autonomousCommand = new MyAutoCommand();
+        // break;
+        // case "Default Auto":
+        // default:
+        // autonomousCommand = new ExampleCommand();
+        // break;
+        // }
 
-	// schedule the autonomous command (example)
-	if (autoCommand != null) {
-	    autoCommand.start();
-	}
+        // schedule the autonomous command (example)
+        if (autoCommand != null) {
+            autoCommand.start();
+        }
     }
 
     /**
@@ -181,8 +181,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-	Scheduler.getInstance().run();
-	telemetry();
+        Scheduler.getInstance().run();
+        telemetry();
     }
 
     /**
@@ -197,8 +197,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-	Scheduler.getInstance().run();
-	telemetry();
+        Scheduler.getInstance().run();
+        telemetry();
     }
 
     /**
@@ -206,24 +206,24 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void testPeriodic() {
-	telemetry();
+        telemetry();
     }
 
     public void telemetry() {
-	//SmartDashboard.putNumber("Vision distance", vision.getDistance());
-	//SmartDashboard.putNumber("Vision angle", vision.getAngle());
-	SmartDashboard.putNumber("Left Distance", chassis.getLeftDistance());
-	SmartDashboard.putNumber("Right Distance", chassis.getRightDistance());
-	SmartDashboard.putNumber("Hi Pressure", chassis.getHiPressure());
-	SmartDashboard.putNumber("Lo Pressure", chassis.getLoPressure());
-	SmartDashboard.putNumber("Heading", Robot.ahrs.getAngle());
-	SmartDashboard.putNumber("Turn Rate", Robot.ahrs.getRate());
-	SmartDashboard.putBoolean("Grabber Limit Hit", grabber.isLimitHit());
-	SmartDashboard.putBoolean("Shooter Limit Hit", shooter.isLimitHit());
-	SmartDashboard.putBoolean("Hook Limit Hit", hook.isLimitHit());
-	SmartDashboard.putNumber("Tilt Angle", grabber.getTilt());
-	//SmartDashboard.putNumber("Hook Height", hook.getDistance());
-	SmartDashboard.putNumber("Left Chassis encoder", chassis.getLeftEncoder());
-	SmartDashboard.putNumber("Right Chassis encoder", chassis.getRightEncoder());
+        //SmartDashboard.putNumber("Vision distance", vision.getDistance());
+        //SmartDashboard.putNumber("Vision angle", vision.getAngle());
+        SmartDashboard.putNumber("Left Distance", chassis.getLeftDistance());
+        SmartDashboard.putNumber("Right Distance", chassis.getRightDistance());
+        SmartDashboard.putNumber("Hi Pressure", chassis.getHiPressure());
+        SmartDashboard.putNumber("Lo Pressure", chassis.getLoPressure());
+        SmartDashboard.putNumber("Heading", Robot.ahrs.getAngle());
+        SmartDashboard.putNumber("Turn Rate", Robot.ahrs.getRate());
+        SmartDashboard.putBoolean("Grabber Limit Hit", grabber.isLimitHit());
+        SmartDashboard.putBoolean("Shooter Limit Hit", shooter.isLimitHit());
+        SmartDashboard.putBoolean("Hook Limit Hit", hook.isLimitHit());
+        SmartDashboard.putNumber("Tilt Angle", grabber.getTilt());
+        //SmartDashboard.putNumber("Hook Height", hook.getDistance());
+        SmartDashboard.putNumber("Left Chassis encoder", chassis.getLeftEncoder());
+        SmartDashboard.putNumber("Right Chassis encoder", chassis.getRightEncoder());
     }
 }

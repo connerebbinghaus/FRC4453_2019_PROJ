@@ -13,15 +13,15 @@ public class Wings extends Subsystem {
     private final DoubleSolenoid lift = new DoubleSolenoid(RobotMap.LIFTER_UP_SOLENOID, RobotMap.LIFTER_DOWN_SOLENOID);
 
     public Wings() {
-	lift(); // Initialize Lifter to Up position
+        lift(); // Initialize Lifter to Up position
     }
 
     public void lift() {
-	lift.set(Value.kForward);
+        lift.set(Value.kForward);
     }
 
     public void drop() {
-	lift.set(Value.kReverse);
+        lift.set(Value.kReverse);
     }
 
     // Put methods for controlling this subsystem
@@ -29,7 +29,7 @@ public class Wings extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-	// Set the default command for a subsystem here.
-	// setDefaultCommand(new MySpecialCommand());
+        // Set the default command for a subsystem here.
+        // setDefaultCommand(new MySpecialCommand());
     }
 }

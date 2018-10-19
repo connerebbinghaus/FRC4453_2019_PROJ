@@ -34,7 +34,7 @@ public class Grabber extends Subsystem {
     private WPI_TalonSRX     right		    = new WPI_TalonSRX(RobotMap.GRABBER_RIGHT_MOTOR);
     private WPI_TalonSRX     tilt		    = new WPI_TalonSRX(RobotMap.GRABBER_TILT_MOTOR);
     private DoubleSolenoid   grip		    = new DoubleSolenoid(RobotMap.GRABBER_GRIP_SOLENOID,
-	    RobotMap.GRABBER_RELEASE_SOLENOID);
+        RobotMap.GRABBER_RELEASE_SOLENOID);
     
     private boolean isInitialized = false;
  
@@ -44,129 +44,129 @@ public class Grabber extends Subsystem {
      */
 
     public class Init extends CommandGroup {
-	public Init() {
-	    addSequential(new ResetCommand());
-	}
+        public Init() {
+            addSequential(new ResetCommand());
+        }
     }
 
     private class ResetCommand extends Command {
-	public ResetCommand() {
-	    setInterruptible(false);
-	    requires(Grabber.this);
-	}
+        public ResetCommand() {
+                setInterruptible(false);
+                requires(Grabber.this);
+        }
 
-	@Override
-	protected void initialize() {
-	    //System.out.println("Grabber Init initializing...");
-	    isInitialized=false;
-	    left.setNeutralMode(NeutralMode.Brake);
-	    right.setNeutralMode(NeutralMode.Brake);
-	    left.neutralOutput();
-	    right.neutralOutput();
+        @Override
+        protected void initialize() {
+            //System.out.println("Grabber Init initializing...");
+            isInitialized=false;
+            left.setNeutralMode(NeutralMode.Brake);
+            right.setNeutralMode(NeutralMode.Brake);
+            left.neutralOutput();
+            right.neutralOutput();
 
-	    grip.set(Value.kForward);
+            grip.set(Value.kForward);
 
-	    tilt.setNeutralMode(NeutralMode.Brake);
-	    tilt.set(ControlMode.PercentOutput, -.5); // TODO: Verify correct direction?
-	}
-	
-	protected void execute() {
-	    //System.out.println("Grabber Init execute");
-	    tilt.set(ControlMode.PercentOutput, -.5);
-	}
+            tilt.setNeutralMode(NeutralMode.Brake);
+            tilt.set(ControlMode.PercentOutput, -.5); // TODO: Verify correct direction?
+        }
 
-	@Override
-	protected boolean isFinished() {
-	    return tilt.getSensorCollection().isRevLimitSwitchClosed(); // TODO Verify correct direction?
-	}
+        protected void execute() {
+            //System.out.println("Grabber Init execute");
+            tilt.set(ControlMode.PercentOutput, -.5);
+        }
 
-	@Override
-	protected void end() {
-	    //System.out.println("Grabber Init end");
-	    tilt.neutralOutput();
-	    tilt.getSensorCollection().setQuadraturePosition(0, 100);
-	    tilt.set(ControlMode.Position, 0);
-	    isInitialized=true;
-	}
+        @Override
+        protected boolean isFinished() {
+            return tilt.getSensorCollection().isRevLimitSwitchClosed(); // TODO Verify correct direction?
+        }
+
+        @Override
+        protected void end() {
+            //System.out.println("Grabber Init end");
+            tilt.neutralOutput();
+            tilt.getSensorCollection().setQuadraturePosition(0, 100);
+            tilt.set(ControlMode.Position, 0);
+            isInitialized=true;
+        }
     }
 
     public Grabber() {
-	tilt.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 100);
-	tilt.setSensorPhase(true);
-	tilt.configForwardSoftLimitThreshold((int) (MAX_ANGLE * TICKS_PER_DEGREE), 100);
-	tilt.configForwardSoftLimitEnable(false, 100);
-	tilt.configClosedloopRamp(0.1, 100);
-	tilt.configPeakOutputForward(1, 100);
-	tilt.configPeakOutputReverse(-0.5, 100);
-	tilt.config_kF(0, kF, 100);
-	tilt.config_kP(0, kP, 100);
-	tilt.config_kI(0, kI, 100);
-	tilt.config_kD(0, kD, 100);
-	tilt.selectProfileSlot(0, 0);
+        tilt.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 100);
+        tilt.setSensorPhase(true);
+        tilt.configForwardSoftLimitThreshold((int) (MAX_ANGLE * TICKS_PER_DEGREE), 100);
+        tilt.configForwardSoftLimitEnable(false, 100);
+        tilt.configClosedloopRamp(0.1, 100);
+        tilt.configPeakOutputForward(1, 100);
+        tilt.configPeakOutputReverse(-0.5, 100);
+        tilt.config_kF(0, kF, 100);
+        tilt.config_kP(0, kP, 100);
+        tilt.config_kI(0, kI, 100);
+        tilt.config_kD(0, kD, 100);
+        tilt.selectProfileSlot(0, 0);
     }
     
     @Override
     public void initDefaultCommand() {
-	setDefaultCommand(new GrabberTeleop());
+        setDefaultCommand(new GrabberTeleop());
     }
 
     public void init() {
-	new Init().start();
+        new Init().start();
     }
     
     public void pull() {
-	left.set(ControlMode.PercentOutput, -.5);
-	right.set(ControlMode.PercentOutput, .5);
-	grip.set(Value.kReverse);
+        left.set(ControlMode.PercentOutput, -.5);
+        right.set(ControlMode.PercentOutput, .5);
+        grip.set(Value.kReverse);
     }
 
     public void grab() {
-	left.set(ControlMode.PercentOutput, -.5);
-	right.set(ControlMode.PercentOutput, .5);
-	grip.set(Value.kForward);
+        left.set(ControlMode.PercentOutput, -.5);
+        right.set(ControlMode.PercentOutput, .5);
+        grip.set(Value.kForward);
     }
 
     public void release() {
-	left.neutralOutput();
-	right.neutralOutput();
-	grip.set(Value.kReverse);
+        left.neutralOutput();
+        right.neutralOutput();
+        grip.set(Value.kReverse);
     }
 
     public void toss() {
-	left.set(ControlMode.PercentOutput, .75);
-	right.set(ControlMode.PercentOutput, -.75);
-	grip.set(Value.kForward);
+        left.set(ControlMode.PercentOutput, .75);
+        right.set(ControlMode.PercentOutput, -.75);
+        grip.set(Value.kForward);
     }
 
     public void hold() {
-	grip.set(Value.kForward);
-	left.neutralOutput();
-	right.neutralOutput();
+        grip.set(Value.kForward);
+        left.neutralOutput();
+        right.neutralOutput();
     }
 
     public void diff(double lMotor, double rMotor) {
-	left.set(ControlMode.PercentOutput, lMotor);
-	right.set(ControlMode.PercentOutput, rMotor);
+        left.set(ControlMode.PercentOutput, lMotor);
+        right.set(ControlMode.PercentOutput, rMotor);
     }
 
     public void tilt(double angle) {
-	tilt.set(ControlMode.Position, angle * TICKS_PER_DEGREE);
+        tilt.set(ControlMode.Position, angle * TICKS_PER_DEGREE);
     }
-    
+
     public double getTilt() {
-	return tilt.getSelectedSensorPosition(0) / TICKS_PER_DEGREE;
+        return tilt.getSelectedSensorPosition(0) / TICKS_PER_DEGREE;
     }
 
     public boolean isLimitHit() {
-	return tilt.getSensorCollection().isRevLimitSwitchClosed();
+        return tilt.getSensorCollection().isRevLimitSwitchClosed();
     }
-    
+
     public boolean isInitialized()
     {
-	return isInitialized;
+        return isInitialized;
     }
-    
+
     public double getTiltSpeed() {
-	return (tilt.getSelectedSensorVelocity(0) * 10.0) / TICKS_PER_DEGREE;
+        return (tilt.getSelectedSensorVelocity(0) * 10.0) / TICKS_PER_DEGREE;
     }
 }

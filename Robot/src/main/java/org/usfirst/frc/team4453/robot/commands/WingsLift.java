@@ -10,15 +10,15 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class WingsLift extends InstantCommand {
 
     public WingsLift() {
-	// Use requires() here to declare subsystem dependencies
-	// eg. requires(chassis);
-	requires(Robot.wings);
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+        requires(Robot.wings);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-	Robot.wings.lift();
+        Robot.wings.lift();
     }
 
 }

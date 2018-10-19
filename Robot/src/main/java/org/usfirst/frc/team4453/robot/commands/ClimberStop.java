@@ -10,14 +10,14 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class ClimberStop extends InstantCommand {
 
     public ClimberStop() {
-	super();
-	requires(Robot.climber);
+        super();
+        requires(Robot.climber);
     }
 
     // Called once when the command executes
     @Override
     protected void execute() {
-	Robot.climber.stop();
+        Robot.climber.stop();
     }
 
 }

@@ -56,242 +56,242 @@ public class Chassis extends PIDSubsystem {
     
     private PIDSource distancePIDInput = new PIDSource() {
 
-	@Override
-	public void setPIDSourceType(PIDSourceType pidSource) {
-	}
+        @Override
+        public void setPIDSourceType(PIDSourceType pidSource) {
+        }
 
-	@Override
-	public PIDSourceType getPIDSourceType() {
-	    return PIDSourceType.kDisplacement;
-	}
+        @Override
+        public PIDSourceType getPIDSourceType() {
+            return PIDSourceType.kDisplacement;
+        }
 
-	@Override
-	public double pidGet() {
-	    return (leftFront.getSelectedSensorPosition(0) + rightFront.getSelectedSensorPosition(0))/2.0; 
-	}
-	
+        @Override
+        public double pidGet() {
+            return (leftFront.getSelectedSensorPosition(0) + rightFront.getSelectedSensorPosition(0))/2.0; 
+        }
+
     };
-    
+
     private PIDOutput distancePIDOutput = new PIDOutput() {
-	@Override
-	public void pidWrite(double output) {
-	    PIDSpeed = output;
-	}
+        @Override
+        public void pidWrite(double output) {
+            PIDSpeed = output;
+        }
     };
     
     private PIDController distancePID = new PIDController(0.00025, 0.0, 0.0004, distancePIDInput, distancePIDOutput); // TODO: PID Values
     
     public Chassis() {
-	super("Chassis", 0.1, 0.0, 0.0); // TODO: PID Values
-	System.out.println("Entering Chassis...");
-	
-	System.out.println("Configuring Distance PID...");
-	getPIDController().setInputRange(0, 360);
-	getPIDController().setContinuous();
-	getPIDController().setAbsoluteTolerance(0.2); // TODO
-	getPIDController().setOutputRange(-.6, .6);
-	distancePID.setAbsoluteTolerance(400); // TODO
-	distancePID.setOutputRange(-.6, .6);
-	distancePID.setName("Chassis", "Distance PID");
-	SmartDashboard.putData(distancePID);
-	System.out.println("Distance PID configured!");
-	
-	System.out.println("Configuring left motors...");
-	leftFront.setSubsystem("Chassis");
-	leftFront.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 100);
-	leftFront.setSensorPhase(true);
-	leftMid.follow(leftFront);
-	leftMid.setSubsystem("Chassis");
-	leftBack.follow(leftFront);
-	leftBack.setSubsystem("Chassis");
-	System.out.println("Left motors configured!");
+        super("Chassis", 0.1, 0.0, 0.0); // TODO: PID Values
+        System.out.println("Entering Chassis...");
+        
+        System.out.println("Configuring Distance PID...");
+        getPIDController().setInputRange(0, 360);
+        getPIDController().setContinuous();
+        getPIDController().setAbsoluteTolerance(0.2); // TODO
+        getPIDController().setOutputRange(-.6, .6);
+        distancePID.setAbsoluteTolerance(400); // TODO
+        distancePID.setOutputRange(-.6, .6);
+        distancePID.setName("Chassis", "Distance PID");
+        SmartDashboard.putData(distancePID);
+        System.out.println("Distance PID configured!");
+        
+        System.out.println("Configuring left motors...");
+        leftFront.setSubsystem("Chassis");
+        leftFront.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 100);
+        leftFront.setSensorPhase(true);
+        leftMid.follow(leftFront);
+        leftMid.setSubsystem("Chassis");
+        leftBack.follow(leftFront);
+        leftBack.setSubsystem("Chassis");
+        System.out.println("Left motors configured!");
 
-	System.out.println("Configuring right motors...");
-	rightFront.setSubsystem("Chassis");
-	rightFront.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 100);
-	rightFront.setSensorPhase(false);
-	rightMid.follow(rightFront);
-	rightMid.setSubsystem("Chassis");
-	rightBack.follow(rightFront);
-	rightBack.setSubsystem("Chassis");
-	System.out.println("Right motors configured!");
+        System.out.println("Configuring right motors...");
+        rightFront.setSubsystem("Chassis");
+        rightFront.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 100);
+        rightFront.setSensorPhase(false);
+        rightMid.follow(rightFront);
+        rightMid.setSubsystem("Chassis");
+        rightBack.follow(rightFront);
+        rightBack.setSubsystem("Chassis");
+        System.out.println("Right motors configured!");
 
-	System.out.println("Enabling compressor...");
-	compressor.setSubsystem("Chassis");
-	compressor.start();
-	System.out.println("Compressor enabled!");
+        System.out.println("Enabling compressor...");
+        compressor.setSubsystem("Chassis");
+        compressor.start();
+        System.out.println("Compressor enabled!");
 
-	System.out.println("Misc. config starting...");
-	hiPressureSensor.setSubsystem("Chassis");
-	loPressureSensor.setSubsystem("Chassis");
-	leftDistanceSensor.setSubsystem("Chassis");
-	rightDistanceSensor.setSubsystem("Chassis");
+        System.out.println("Misc. config starting...");
+        hiPressureSensor.setSubsystem("Chassis");
+        loPressureSensor.setSubsystem("Chassis");
+        leftDistanceSensor.setSubsystem("Chassis");
+        rightDistanceSensor.setSubsystem("Chassis");
 
-	drive.setSubsystem("Chassis");
+        drive.setSubsystem("Chassis");
 
-	shifter.setSubsystem("Chassis");
-	System.out.println("Misc. config finished!");
-	
-	System.out.println("Disabling angle PID...");
-	disable();
-	System.out.println("Disabled angle PID!");
-	System.out.println("Disabling distance PID...");
-	distancePID.disable();
-	System.out.println("Disabled distance PID!");
+        shifter.setSubsystem("Chassis");
+        System.out.println("Misc. config finished!");
+        
+        System.out.println("Disabling angle PID...");
+        disable();
+        System.out.println("Disabled angle PID!");
+        System.out.println("Disabling distance PID...");
+        distancePID.disable();
+        System.out.println("Disabled distance PID!");
 
-	System.out.println("Shifting low...");
-	shift(false);
-	System.out.println("Shifted low!");
-	System.out.println("Exiting Chassis...");
+        System.out.println("Shifting low...");
+        shift(false);
+        System.out.println("Shifted low!");
+        System.out.println("Exiting Chassis...");
     }
     
     public void drive(double lspeed, double rspeed) {
-	drive.tankDrive(lspeed, rspeed);
+        drive.tankDrive(lspeed, rspeed);
     }
 
     public void curveDrive(double spdCmd, double rotCmd, boolean quickTurn) {
-	getPIDController().disable();
-	drive.curvatureDrive(spdCmd, rotCmd, quickTurn);
+        getPIDController().disable();
+        drive.curvatureDrive(spdCmd, rotCmd, quickTurn);
     }
 
     @Override
     public void initDefaultCommand() {
-	setDefaultCommand(new TeleopDrive());
+        setDefaultCommand(new TeleopDrive());
     }
 
     public void shift(boolean highgear) {
-	shifter.set(highgear ? RobotMap.SHIFTER_HIGH_GEAR : RobotMap.SHIFTER_LOW_GEAR);
+        shifter.set(highgear ? RobotMap.SHIFTER_HIGH_GEAR : RobotMap.SHIFTER_LOW_GEAR);
     }
 
     public void stop() {
-	PIDSpeed = 0;
-	getPIDController().reset();
-	distancePID.reset();
-	drive.stopMotor();
+        PIDSpeed = 0;
+        getPIDController().reset();
+        distancePID.reset();
+        drive.stopMotor();
     }
 
     public double getHeading() {
-	return heading;
+        return heading;
     }
     
     public void setHeading(double h) {
-	heading = h;
+        heading = h;
     }
     
     public double getXPos() {
-	return xPos;
+        return xPos;
     }
     
     public void setXPos(double x) {
-	xPos = x;
+        xPos = x;
     }
     
     public double getYPos() {
-	return yPos;
+        return yPos;
     }
     
     public void setYPos(double y) {
-	yPos = y;
+        yPos = y;
     }
     
     public void resetNavigation() {
-	xPos = 0;
-	yPos = 0;
-	heading = 0;
+        xPos = 0;
+        yPos = 0;
+        heading = 0;
     }
 
     public double getLoPressure() {
-	return 250.0 * (loPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0; // ToDo
+        return 250.0 * (loPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0; // ToDo
     }
 
     public double getHiPressure() {
-	return 250.0 * (hiPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
+        return 250.0 * (hiPressureSensor.getVoltage() / PRESSURE_SENSOR_INPUTVOLTAGE) - 25.0;
     }
 
     public double getLeftDistance() {
-	return leftDistanceSensor.getVoltage() / DISTANCE_SENSOR_SCALE;
+        return leftDistanceSensor.getVoltage() / DISTANCE_SENSOR_SCALE;
     }
 
     public double getRightDistance() {
-	return rightDistanceSensor.getVoltage() / DISTANCE_SENSOR_SCALE;
+        return rightDistanceSensor.getVoltage() / DISTANCE_SENSOR_SCALE;
     }
 
     public void arcadeDrive(double spdAxis, double turnAxis) {
-//	getPIDController().disable();
-	drive.arcadeDrive(spdAxis, turnAxis);
+        //getPIDController().disable();
+        drive.arcadeDrive(spdAxis, turnAxis);
     }
 
     public void turn(double angle) {
-	driveWithHeading(1.0, angle);	//testing Larsen from 0 to 1
-	//TODO Larsen
+        driveWithHeading(1.0, angle);	//testing Larsen from 0 to 1
+        //TODO Larsen
     }
     
     public void driveWithHeading(double speed, double angle) {
-	Robot.ahrs.zeroYaw();
-	getPIDController().reset();
-	getPIDController().enable();
-	distancePID.disable();
-	setSetpoint(angle);
-	PIDSpeed = speed;
+        Robot.ahrs.zeroYaw();
+        getPIDController().reset();
+        getPIDController().enable();
+        distancePID.disable();
+        setSetpoint(angle);
+        PIDSpeed = speed;
     }
     
     public void driveDistanceWithHeading(double distance, double angle)
     {
-	Robot.ahrs.zeroYaw();
-	leftFront.setSelectedSensorPosition(0, 0, 100);
-	rightFront.setSelectedSensorPosition(0, 0, 100);
-	distancePID.setSetpoint(distance * CHASSIS_TICKS_PER_INCH);
-	setSetpoint(angle);
-	getPIDController().reset();
-	getPIDController().enable();
-	distancePID.reset();
-	distancePID.enable();
+        Robot.ahrs.zeroYaw();
+        leftFront.setSelectedSensorPosition(0, 0, 100);
+        rightFront.setSelectedSensorPosition(0, 0, 100);
+        distancePID.setSetpoint(distance * CHASSIS_TICKS_PER_INCH);
+        setSetpoint(angle);
+        getPIDController().reset();
+        getPIDController().enable();
+        distancePID.reset();
+        distancePID.enable();
     }
     
     public void driveDistance(double distance)
     {
-	Robot.ahrs.zeroYaw();
-	leftFront.setSelectedSensorPosition(0, 0, 100);
-	rightFront.setSelectedSensorPosition(0, 0, 100);
-	distancePID.setSetpoint(distance * CHASSIS_TICKS_PER_INCH);
-	setSetpoint(0.0);
-	getPIDController().reset();
-	getPIDController().enable();
-	distancePID.reset();
-	distancePID.enable();
+        Robot.ahrs.zeroYaw();
+        leftFront.setSelectedSensorPosition(0, 0, 100);
+        rightFront.setSelectedSensorPosition(0, 0, 100);
+        distancePID.setSetpoint(distance * CHASSIS_TICKS_PER_INCH);
+        setSetpoint(0.0);
+        getPIDController().reset();
+        getPIDController().enable();
+        distancePID.reset();
+        distancePID.enable();
     }
     
     public boolean distanceOnTarget() {
-	return Math.abs(distancePID.getSetpoint() - distancePIDInput.pidGet()) < 1.0*CHASSIS_TICKS_PER_INCH && Math.abs(chassisSpeed()) < .5;
+        return Math.abs(distancePID.getSetpoint() - distancePIDInput.pidGet()) < 1.0*CHASSIS_TICKS_PER_INCH && Math.abs(chassisSpeed()) < .5;
     }
     
     public double chassisSpeed() {
-	return (leftFront.getSelectedSensorVelocity(0) + rightFront.getSelectedSensorVelocity(0)) * 10.0 / (2.0 * CHASSIS_TICKS_PER_INCH);
+        return (leftFront.getSelectedSensorVelocity(0) + rightFront.getSelectedSensorVelocity(0)) * 10.0 / (2.0 * CHASSIS_TICKS_PER_INCH);
     }
     
     public double getLeftEncoder()
     {
-	return leftFront.getSelectedSensorPosition(0) / CHASSIS_TICKS_PER_INCH;
+        return leftFront.getSelectedSensorPosition(0) / CHASSIS_TICKS_PER_INCH;
     }
     
     public double getRightEncoder()
     {
-	return rightFront.getSelectedSensorPosition(0) / CHASSIS_TICKS_PER_INCH;
+        return rightFront.getSelectedSensorPosition(0) / CHASSIS_TICKS_PER_INCH;
     }
     
     public boolean angleOnTarget() {
-	return getPIDController().onTarget() && Math.abs(Robot.ahrs.getRate()) < .5;
+        return getPIDController().onTarget() && Math.abs(Robot.ahrs.getRate()) < .5;
     }
     
     @Override
     protected double returnPIDInput() {
-	return Robot.ahrs.getYaw() % 360;
+        return Robot.ahrs.getYaw() % 360;
     }
 
     @Override
     protected void usePIDOutput(double output) {
-//	System.out.println("Chassis pid output speed=" + PIDSpeed + ", angle=" + output);
-	drive.arcadeDrive(PIDSpeed, output);
-//	drive.arcadeDrive(PIDSpeed, 0.0);
+        //System.out.println("Chassis pid output speed=" + PIDSpeed + ", angle=" + output);
+        drive.arcadeDrive(PIDSpeed, output);
+        //drive.arcadeDrive(PIDSpeed, 0.0);
     }
 }

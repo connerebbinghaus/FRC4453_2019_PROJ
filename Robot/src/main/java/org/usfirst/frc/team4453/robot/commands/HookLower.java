@@ -17,12 +17,12 @@ public class HookLower extends Command {
 
     // Called once when the command executes
     protected void initialize() {
-	Robot.hook.lower();
+        Robot.hook.lower();
     }
 
     @Override
     protected boolean isFinished() {
-	return false;
+        return false;
     }
 
 }

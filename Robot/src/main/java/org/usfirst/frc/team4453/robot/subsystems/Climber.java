@@ -19,30 +19,30 @@ public class Climber extends Subsystem {
     private final WPI_TalonSRX climberRight = new WPI_TalonSRX(RobotMap.CLIMBER_LEFT_MOTOR);
 
     public double getDistanceClimbed() {
-	return Math.min(climberRight.getSensorCollection().getQuadraturePosition(),
-		climberLeft.getSensorCollection().getQuadraturePosition()) / COUNTS_PER_INCH;
+        return Math.min(climberRight.getSensorCollection().getQuadraturePosition(),
+            climberLeft.getSensorCollection().getQuadraturePosition()) / COUNTS_PER_INCH;
     }
 
     @Override
     public void initDefaultCommand() {
-	setDefaultCommand(new ClimberStop());
+        setDefaultCommand(new ClimberStop());
     }
 
     public void resetEncoders() {
-	climberLeft.getSensorCollection().setQuadraturePosition(0, 100);
-	climberRight.getSensorCollection().setQuadraturePosition(0, 100);
+        climberLeft.getSensorCollection().setQuadraturePosition(0, 100);
+        climberRight.getSensorCollection().setQuadraturePosition(0, 100);
     }
 
     public void setLeftPower(double speed) {
-	climberLeft.set(speed);
+        climberLeft.set(speed);
     }
 
     public void setRightPower(double speed) {
-	climberRight.set(speed);
+        climberRight.set(speed);
     }
 
     public void stop() {
-	climberLeft.set(0);
-	climberRight.set(0);
+        climberLeft.set(0);
+        climberRight.set(0);
     }
 }

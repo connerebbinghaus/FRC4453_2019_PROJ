@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 public class GrabberThrow extends TimedCommand {
 
     public GrabberThrow() {
-	super(1.5);
-	requires(Robot.grabber);
+        super(1.5);
+        requires(Robot.grabber);
     }
     
     protected void execute() {
-	Robot.grabber.toss();
+        Robot.grabber.toss();
     }
 
 }

@@ -10,17 +10,16 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class ChassisShiftLow extends InstantCommand {
 
     public ChassisShiftLow() {
-	super();
-	// Use requires() here to declare subsystem dependencies
-	// eg. requires(chassis);
-	requires(Robot.chassis);
-
+        super();
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+        requires(Robot.chassis);
     }
 
     // Called once when the command executes
     @Override
     protected void initialize() {
-	Robot.chassis.shift(false);
+        Robot.chassis.shift(false);
     }
 
 }
