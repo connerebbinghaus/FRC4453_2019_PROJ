@@ -1,15 +1,36 @@
-#!/bin/sh
-set -e
-if [ ! -d "$OPENCV_INSTALL_DIR/lib" ]; then
-  wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz -O opencv-$OPENCV_VERSION.tar.gz
-  tar xzf opencv-$OPENCV_VERSION.tar.gz
-  rm opencv-$OPENCV_VERSION.tar.gz
-  cd opencv-$OPENCV_VERSION
-  mkdir build
-  cd build
-  cmake -DWITH_CUDA=OFF -DENABLE_AVX=ON -DWITH_OPENGL=ON -DWITH_TBB=ON -DBUILD_opencv_apps=OFF -DBUILD_TESTS=OFF -DBUILD_PERF_TESTS=OFF -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX="$OPENCV_INSTALL_DIR" -DPYTHON3_EXECUTABLE=$(which python3) -DPYTHON3_INCLUDE_DIR=$(python3 -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())") ..
-  make -j2
-  make install
-else
-  echo "Using cached opencv3 install."
+set -eux -o pipefail
+
+OPENCV_VERSION=${OPENCV_VERSION:-3.4.1}
+OPENCV_BUILD=$(pwd)/opencv/build
+OPENCV_CONTRIB=$(pwd)/opencv_contrib/modules
+INSTALL_FLAG=$HOME/usr/installed-version/$OPENCV_VERSION
+INSTALL_PREFIX=$HOME/usr
+
+if [[ ! -e $INSTALL_FLAG ]]; then
+    TMP=$(mktemp -d)
+    mkdir -p $OPENCV_BUILD
+
+    pushd $OPENCV_BUILD
+    cmake \
+        -D WITH_CUDA=OFF \
+        -D BUILD_EXAMPLES=OFF \
+        -D BUILD_TESTS=OFF \
+        -D BUILD_PERF_TESTS=OFF  \
+        -D BUILD_opencv_java=OFF \
+        -D BUILD_opencv_python=OFF \
+        -D BUILD_opencv_python2=OFF \
+        -D BUILD_opencv_python3=OFF \
+        -D OPENCV_EXTRA_MODULES_PATH=$OPENCV_CONTRIB \
+        -D CMAKE_INSTALL_PREFIX=$INSTALL_PREFIX \
+        -D CMAKE_BUILD_TYPE=Release \
+        -D CUDA_ARCH_BIN=5.2 \
+        -D CUDA_ARCH_PTX="" \
+        ..
+    make install && sudo mkdir -p "$(dirname "$INSTALL_FLAG")" && sudo touch "$INSTALL_FLAG";
+    popd
+    touch $HOME/fresh-cache
 fi
+
+sudo cp -r $HOME/usr/include/* /usr/local/include/
+sudo cp -r $HOME/usr/lib/* /usr/local/lib/
+sudo ldconfig

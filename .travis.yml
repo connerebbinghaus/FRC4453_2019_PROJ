@@ -9,22 +9,44 @@ matrix:
 
     - language: rust
       cache: cargo
+      cache:
+        timeout: 1000
+        cargo: true
+        directories:
+          - $HOME/usr/installed-version
+          - $HOME/usr/include
+          - $HOME/usr/lib
+      env:
+        global:
+          - MAKEFLAGS="-j 4"
+      sudo: required
+      dist: trusty
+      before_install:
+      - chmod +x ./opencv_install.sh && sudo -E ./opencv_install.sh
+      - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/usr/local/lib/x86_64-linux-gnu
+      addons:
+        apt:
+          packages:
+          - build-essential
+          - cmake
+          - git
+          - libavcodec-dev
+          - libavformat-dev
+          - libdc1394-22-dev
+          - libgmp-dev
+          - libgtk2.0-dev
+          - libjasper-dev
+          - libjpeg-dev
+          - libleptonica-dev
+          - libpng-dev
+          - libswscale-dev
+          - libtbb-dev
+          - libtbb2
+          - libtiff-dev
+          - pkg-config
+          - xvfb
       rust: stable
       before_script:
         - cd Vision
       script:
         - cargo test
-
-cache:
-  directories:
-    - $OPENCV_INSTALL_DIR
-  pip: true
-env:
-  global:
-    - OPENCV_VERSION=3.4.3
-    - OPENCV_INSTALL_DIR="$HOME/opencv-$OPENCV_VERSION-install"
-    - LD_LIBRARY_PATH="$OPENCV_INSTALL_DIR/lib"
-    - PKG_CONFIG_PATH="$OPENCV_INSTALL_DIR/lib/pkgconfig"
-    - PYTHONPATH="$OPENCV_INSTALL_DIR/lib/python3.6/site-packages"
-install:
-- chmod +x ./opencv_install.sh && ./opencv_install.sh
