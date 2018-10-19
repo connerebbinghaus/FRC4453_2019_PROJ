@@ -27,4 +27,4 @@ env:
     - PKG_CONFIG_PATH="$OPENCV_INSTALL_DIR/lib/pkgconfig"
     - PYTHONPATH="$OPENCV_INSTALL_DIR/lib/python3.6/site-packages"
 install:
-- ./opencv_install.sh
+- chmod +x ./opencv_install.sh && ./opencv_install.sh
