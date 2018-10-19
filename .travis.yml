@@ -1,0 +1,33 @@
+matrix:
+  include:
+    - language: java
+      jdk: 
+        - oraclejdk8
+        - openjdk8
+        - oraclejdk11
+        - openjdk11
+      matrix:
+        allow_failures:
+          - jdk: 
+            - oraclejdk11
+            - openjdk11
+        fast_finish: true
+      before_script:
+        - cd Robot
+      script:
+        - ./gradlew build
+
+    - language: rust
+      cache: cargo
+      rust:
+        - stable
+        - beta
+        - nightly
+      matrix:
+        allow_failures:
+          - rust: nightly
+        fast_finish: true
+      before_script:
+        - cd Vision
+      script:
+        - cargo test
