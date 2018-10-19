@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "Robot"
+		},
+		{
+			"path": "Vision"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}
