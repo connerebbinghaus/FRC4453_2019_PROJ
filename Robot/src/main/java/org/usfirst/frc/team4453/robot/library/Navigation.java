@@ -19,14 +19,14 @@ public class Navigation {
     double y = y1 - y2;
     double dist = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     return dist;
-	}
-	
-	public static double calculateCoordDist(Coordinate coord1, Coordinate coord2) {
-		double x = coord1.X - coord2.X;
-    	double y = coord1.Y - coord2.Y;
-    	double coordDist = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-   	 	return coordDist;
-	}
+    }
+
+    public static double calculateCoordDist(Coordinate coord1, Coordinate coord2) {
+        double x = coord1.X - coord2.X;
+        double y = coord1.Y - coord2.Y;
+        double coordDist = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+        return coordDist;
+    }
     
     public static double calculateAngle (double x1, double y1, double x2, double y2){
         double x = x2 - x1;
