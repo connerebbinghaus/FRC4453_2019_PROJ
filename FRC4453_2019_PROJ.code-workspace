@@ -8,6 +8,8 @@
 		}
 	],
 	"settings": {
-		"java.configuration.updateBuildConfiguration": "automatic"
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"travis.repository": "FRC4453_2019_PROJ",
+		"travis.username": "connerebbinghaus"
 	}
 }
