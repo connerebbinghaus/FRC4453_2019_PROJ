@@ -2,6 +2,7 @@
 set -eux -o pipefail
 
 OPENCV_VERSION=${OPENCV_VERSION:-3.4.1}
+OPENCV_SRC=$(pwd)/opencv
 OPENCV_BUILD=$(pwd)/opencv/build
 OPENCV_CONTRIB=$(pwd)/opencv_contrib/modules
 INSTALL_FLAG=$HOME/usr/installed-version/$OPENCV_VERSION
@@ -9,6 +10,14 @@ INSTALL_PREFIX=$HOME/usr
 
 if [[ ! -e $INSTALL_FLAG ]]; then
     TMP=$(mktemp -d)
+
+    wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz -O opencv-$OPENCV_VERSION.tar.gz 
+
+    tar xzf opencv-$OPENCV_VERSION.tar.gz -
+
+    rm opencv-$OPENCV_VERSION.tar.gz
+    mv opencv-$OPENCV_VERSION $OPENCV_SRC
+
     mkdir -p $OPENCV_BUILD
 
     pushd $OPENCV_BUILD
