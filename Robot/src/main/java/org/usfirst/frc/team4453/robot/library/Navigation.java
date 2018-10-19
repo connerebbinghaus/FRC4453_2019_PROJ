@@ -28,11 +28,16 @@ public class Navigation {
         return coordDist;
     }
     
-    public static double calculateAngle (double x1, double y1, double x2, double y2){
+    public static double calculateAngle (double x1, double y1, double x2, double y2) {
         double x = x2 - x1;
         double y = y2 - y1;
         double dangle = 90 - Math.toDegrees(Math.atan2(y, x));
         return dangle;
+    }
+
+    public static double calculateCoordAngle(Coordinate coord1, Coordinate coord2) {
+        // TODO For Larsen.
+        return 0.0;
     }
 
     public static Coordinate getCurrentCoordinate() {

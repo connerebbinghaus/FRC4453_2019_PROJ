@@ -36,24 +36,42 @@ public class AutoNavigation extends Command {
     @Override
     protected void execute() {
         Coordinate goingTo = coordinates.get(currentCoordinate);
-        Coordinate currentCoordinate = Navigation.getCurrentCoordinate();
+        Coordinate currentCoord = Navigation.getCurrentCoordinate();
+
+        if(!isTurned) {
+            double angle = Navigation.calculateCoordAngle(currentCoord, goingTo);
+            Robot.chassis.turn(angle);
+            if(Robot.chassis.angleOnTarget()) {
+                isTurned = true;
+            }
+        } 
+        else {
+            double distance = Navigation.calculateCoordDist(currentCoord, goingTo);
+            Robot.chassis.driveDistance(distance);
+            if(Robot.chassis.distanceOnTarget()) {
+                currentCoordinate++;
+                isTurned = false;
+            }
+        }
 
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return false;
+        return currentCoordinate == coordinates.size();
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
+        Robot.chassis.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
+        Robot.chassis.stop();
     }
 }
