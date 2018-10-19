@@ -1,3 +1,4 @@
+#!/bin/bash
 set -eux -o pipefail
 
 OPENCV_VERSION=${OPENCV_VERSION:-3.4.1}
