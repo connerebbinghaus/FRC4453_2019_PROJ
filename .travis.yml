@@ -8,15 +8,23 @@ matrix:
         - ./gradlew build
 
     - language: rust
-      addons:
-        apt:
-          sources:
-            - sourceline: 'ppa:orangain/opencv'
-          packages:
-            - opencv
       cache: cargo
       rust: stable
       before_script:
         - cd Vision
       script:
         - cargo test
+
+cache:
+  directories:
+    - $OPENCV_INSTALL_DIR
+  pip: true
+env:
+  global:
+    - OPENCV_VERSION=3.2.0
+    - OPENCV_INSTALL_DIR="$HOME/opencv-$OPENCV_VERSION-install"
+    - LD_LIBRARY_PATH="$OPENCV_INSTALL_DIR/lib"
+    - PKG_CONFIG_PATH="$OPENCV_INSTALL_DIR/lib/pkgconfig"
+    - PYTHONPATH="$OPENCV_INSTALL_DIR/lib/python3.6/site-packages"
+install:
+- ./install_opencv.sh
