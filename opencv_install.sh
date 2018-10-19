@@ -4,6 +4,7 @@ set -eux -o pipefail
 OPENCV_VERSION=${OPENCV_VERSION:-3.4.1}
 OPENCV_SRC=$(pwd)/opencv
 OPENCV_BUILD=$(pwd)/opencv/build
+OPENCV_CONTRIB_ROOT=$(pwd)/opencv_contrib/modules
 OPENCV_CONTRIB=$(pwd)/opencv_contrib/modules
 INSTALL_FLAG=$HOME/usr/installed-version/$OPENCV_VERSION
 INSTALL_PREFIX=$HOME/usr
@@ -11,12 +12,17 @@ INSTALL_PREFIX=$HOME/usr
 if [[ ! -e $INSTALL_FLAG ]]; then
     TMP=$(mktemp -d)
 
-    wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz -O opencv-$OPENCV_VERSION.tar.gz 
+    wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz -O opencv-$OPENCV_VERSION.tar.gz
+    wget https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz -O opencv_contrib-$OPENCV_VERSION.tar.gz
 
-    tar xzf opencv-$OPENCV_VERSION.tar.gz -
+    tar xzf opencv-$OPENCV_VERSION.tar.gz
+    tar xzf opencv_contrib-$OPENCV_VERSION.tar.gz
 
     rm opencv-$OPENCV_VERSION.tar.gz
     mv opencv-$OPENCV_VERSION $OPENCV_SRC
+
+    rm opencv_contrib-$OPENCV_VERSION.tar.gz
+    mv opencv_contrib-$OPENCV_VERSION $OPENCV_CONTRIB_ROOT
 
     mkdir -p $OPENCV_BUILD
 
@@ -33,8 +39,6 @@ if [[ ! -e $INSTALL_FLAG ]]; then
         -D OPENCV_EXTRA_MODULES_PATH=$OPENCV_CONTRIB \
         -D CMAKE_INSTALL_PREFIX=$INSTALL_PREFIX \
         -D CMAKE_BUILD_TYPE=Release \
-        -D CUDA_ARCH_BIN=5.2 \
-        -D CUDA_ARCH_PTX="" \
         ..
     make install && sudo mkdir -p "$(dirname "$INSTALL_FLAG")" && sudo touch "$INSTALL_FLAG";
     popd
