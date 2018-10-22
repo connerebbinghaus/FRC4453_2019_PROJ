@@ -39,6 +39,7 @@ if [[ ! -e $INSTALL_FLAG ]]; then
         -D OPENCV_EXTRA_MODULES_PATH=$OPENCV_CONTRIB \
         -D CMAKE_INSTALL_PREFIX=$INSTALL_PREFIX \
         -D CMAKE_BUILD_TYPE=Release \
+        -D BUILD_SHARED_LIBS=OFF \
         ..
     make install && sudo mkdir -p "$(dirname "$INSTALL_FLAG")" && sudo touch "$INSTALL_FLAG";
     popd
