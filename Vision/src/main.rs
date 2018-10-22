@@ -8,6 +8,7 @@ extern crate serde_json;
 extern crate log;
 extern crate fern;
 
+
 use rumqtt::{MqttOptions, MqttClient, MqttCallback, QoS, Message};
 use std::sync::{Arc, RwLock};
 
