@@ -1,4 +1,4 @@
-#![warn(clippy::all)]
+#![warn(clippy)]
 extern crate cv;
 extern crate rumqtt;
 #[macro_use]
